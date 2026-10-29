@@ -5,5 +5,7 @@ dist/
 !.env.example
 server/service-account.json
 .supabase/
+supabase/.temp/
+*.tsbuildinfo
 .DS_Store
 *.log
