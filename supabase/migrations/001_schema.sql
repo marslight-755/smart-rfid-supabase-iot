@@ -1,5 +1,5 @@
 create extension if not exists pgcrypto;
-create or replace function public.hash_token(value text) returns text language sql immutable as $$ select encode(digest(value,'sha256'),'hex'); $$;
+create or replace function public.hash_token(value text) returns text language sql immutable as $$ select encode(extensions.digest(value::bytea,'sha256'),'hex'); $$;
 
 create table public.organizations (id uuid primary key default gen_random_uuid(), name text not null, created_at timestamptz not null default now());
 create table public.organization_members (organization_id uuid references public.organizations(id) on delete cascade, user_id uuid references auth.users(id) on delete cascade, role text not null default 'member' check (role in ('admin','member','viewer')), primary key (organization_id,user_id));
